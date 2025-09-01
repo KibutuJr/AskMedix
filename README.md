@@ -92,6 +92,8 @@ Ensure you have the following installed:
 
 ---
 
+```
+
 ## Suggested Workflow
 
 1. Create embeddings and load them into Pinecone:
@@ -164,5 +166,5 @@ This project is licensed under the terms specified in the included `LICENSE` fil
 ---
 
 ```
-Do you want me to also design a **professional badges section** (Python, Flask, LangChain, Hugging Face, Pinecone, Docker) at the top to make the README look more polished?
-```
+
+
