@@ -149,11 +149,12 @@ We welcome contributions to make AskMediX more impactful. Whether it's improving
 
 ## Contact
 
-**Fred Kibutu**
-*Data Analyst | Data Engineer | Software Developer*
-📧 [Email][Kibutujr@gmail.com]
-[LinkedIn][https://www.linkedin.com/in/fred-kibutu/] 
-[Portfolio][https://kibutujr.github.io/Portfolio-KibutuJr/]
+**Fred Kibutu**  
+*Data Analyst | Data Engineer | Software Developer*  
+
+- 📧 Email: [Kibutujr@gmail.com](mailto:Kibutujr@gmail.com)  
+- 🔗 LinkedIn: [linkedin.com/in/fred-kibutu](https://www.linkedin.com/in/fred-kibutu/)  
+- 🌐 Portfolio: [kibutujr.github.io/Portfolio-KibutuJr](https://kibutujr.github.io/Portfolio-KibutuJr/)  
 
 ---
 
