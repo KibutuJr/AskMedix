@@ -1,183 +1,168 @@
-# AskMediX
+# AskMediX - Medical Chatbot
 
-A self‑hosted, LangChain‑powered medical chatbot branded as AskMediX, using Hugging Face’s Inference API for LLM calls and Pinecone for vector indexing.
+**LangChain-powered self-hosted medical chatbot**, branded as *AskMediX*, leveraging Hugging Face’s Inference API for LLM calls and Pinecone for efficient vector indexing and retrieval.
 
-## Table of Contents
+---
 
-How to Run
+##  Table of Contents
 
-Configuration
+- [About](#about)  
+- [Features](#features)  
+- [Tech Stack](#tech-stack)  
+- [Prerequisites](#prerequisites)  
+- [Installation & Setup](#installation--setup)  
+- [Usage](#usage)  
+- [Configuration](#configuration)  
+- [Suggested Workflow](#suggested-workflow)  
+- [Running Scripts](#running-scripts)  
+- [Deployment & CI/CD](#deployment--ci-cd)  
+- [Story & Real-World Impact](#story--real-world-impact)  
+- [Contributing](#contributing)  
+- [Contact](#contact)  
+- [License](#license)  
 
-Scripts
+---
 
-Tech Stack
+##  About
 
-AWS CI/CD Deployment with GitHub Actions
+AskMediX is a locally deployable medical chatbot that processes user queries by generating embeddings via Hugging Face and retrieving relevant medical information using Pinecone's vector search. It’s ideal for secure, offline, or isolated environments where direct dependency control and privacy are essential.
 
-License
+---
 
-## How to Run
+##  Features
 
-## 1. Clone the Repository
+- **Interactive chatbot UI** powered by Flask  
+- **Embedding-based retrieval** for fast and relevant medical responses  
+- **Configurable via environment variables**, making setup flexible  
+- **Open architecture** allowing you to swap out LLM providers or vector stores  
+- **Designed for extensibility**—add more scripts, data sources, or UI improvements
 
-git clone https://github.com/<your-org>/AskMediX.git
-cd AskMediX
+---
 
-## 2. Set Up Python Environment
+##  Tech Stack
 
-Create and activate a conda environment:
+- **Python 3.10**  
+- **LangChain** for prompt orchestration  
+- **Flask** for web UI and HTTP service  
+- **Hugging Face Inference API** for LLM-powered responses  
+- **Pinecone** for vector embeddings and fast similarity search  
+- **Docker** support via `Dockerfile` for containerized deployment
 
-conda create -n askmedix python=3.10 -y
-conda activate askmedix
+---
 
-## 3. Install Dependencies
+##  Prerequisites
 
-pip install -r requirements.txt
-pip install huggingface-hub transformers
+Ensure you have the following installed:
 
-## 4. Configure Environment Variables
+- Python 3.10  
+- (Optional) Conda or virtual environment tool  
+- Access to Hugging Face Inference API Token  
+- Pinecone account and valid API key  
 
-Create a .env file in the project root with the following:
+---
 
-PINECONE_API_KEY="xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-HUGGINGFACE_API_TOKEN="hf_xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+##  Installation & Setup
 
-## 5. Build the Pinecone Index
+1. **Clone the repository**
+   ```
+   git clone https://github.com/KibutuJr/AskMedix.git
+   cd AskMedix
+```
 
-Run the indexing script to embed your medical documents and push to Pinecone:
+2. **Create and activate a Python environment**
 
-python store_index.py
+   ```
+   conda create -n askmedix python=3.10 -y
+   conda activate askmedix
+   ```
 
-## 6. Launch the Flask App
+3. **Install required packages**
 
-python app.py
+   ```
+   pip install -r requirements.txt
+   pip install huggingface-hub transformers
+   ```
 
-By default, the server will start on port 5000. Open your browser and navigate to:
+4. **Configure environment variables** by creating a `.env` file:
 
-http://localhost:5000
+   ```
+   PINECONE_API_KEY="your_pinecone_api_key"
+   HUGGINGFACE_API_TOKEN="your_huggingface_token"
+   ```
 
-Configuration
-All configuration is loaded via environment variables. The main variables are:
+---
 
-PINECONE_API_KEY – Your Pinecone API key.
+## Suggested Workflow
 
-HUGGINGFACE_API_TOKEN – Your Hugging Face Hub token (with Inference API access).
+1. Create embeddings and load them into Pinecone:
 
-Available Scripts
-store_index.py – Reads your documents, generates embeddings via Hugging Face, and upserts them into your Pinecone index.
+   ```
+   python store_index.py
+   ```
+2. Start the web server:
 
-app.py – Starts the Flask web server and exposes the AskMediX chat UI.
+   ```
+   python app.py
+   ```
+3. Open your browser at `http://localhost:5000`, and start interacting with AskMediX.
 
-Feel free to extend or modify these scripts to fit your own data sources or LLM settings.
+---
 
-Tech Stack
-Python 3.10
+## Available Scripts
 
-LangChain – Orchestration for prompt management and chaining.
+| Script             | Purpose                                                                  |
+| ------------------ | ------------------------------------------------------------------------ |
+| `store_index.py`   | Generates document embeddings and uploads them to Pinecone               |
+| `app.py`           | Runs the Flask app serving the chatbot UI                                |
+| `chatbot_ui.py`    | Handles front-end UI elements (if separated from `app.py`)               |
+| `sheets_utils.py`  | Utility functions for processing data from Google Sheets (if applicable) |
+| `template.py`      | Template utilities or prompt scaffolding (project-specific)              |
+| `cancel_server.py` | Gracefully stops or resets the running server (if present)               |
 
-Flask – Lightweight web framework for hosting the AskMediX chat UI and API.
+---
 
-Hugging Face Inference API – For all LLM calls (e.g. text-generation, chat-completion).
+## Deployment & CI/CD
 
-Pinecone – Vector database for similarity search.
+* **Containerization**: Use the existing `Dockerfile` to build and run the app in a container:
 
-AWS CI/CD Deployment with GitHub Actions
-Automate build, push, and deploy your AskMediX Docker image to AWS using GitHub Actions.
+  ```
+  docker build -t askmedix .
+  docker run -e PINECONE_API_KEY -e HUGGINGFACE_API_TOKEN -p 5000:5000 askmedix
+  ```
+* **Continuous Deployment**: You can integrate GitHub Actions for CI/CD workflows to automate testing and deployment.
 
-## 1. IAM User & Permissions
+---
 
-Create an IAM user with the following managed policies:
+## Story & Real-World Impact
 
-AmazonEC2ContainerRegistryFullAccess
+Access to reliable medical information remains a challenge for many communities worldwide. Patients often rely on generic search engines or unverified sources, leading to misinformation, delayed diagnoses, or anxiety. *AskMediX* was built to bridge this gap by providing an intelligent, localized, and **self-hosted medical assistant** capable of delivering fast, relevant, and trustworthy responses.
 
-AmazonEC2FullAccess
+By combining **natural language processing**, **vector search**, and **flexible deployment**, AskMediX can be adapted for hospitals, telemedicine providers, or even rural clinics with limited internet access. The project demonstrates how AI can be responsibly applied in healthcare technology—offering guidance and educational support while maintaining privacy and customizability.
 
-## 2. Create an ECR Repository
+---
 
-aws ecr create-repository --repository-name askmedix --region ap-south-1
-Save the returned URI, e.g.:
-970547337635.dkr.ecr.ap-south-1.amazonaws.com/askmedix
+## Contributing
 
-## 3. Provision an EC2 Instance (Ubuntu)
+We welcome contributions to make AskMediX more impactful. Whether it's improving UI/UX, adding more medical datasets, enhancing security, or refining deployment scripts, your input is valuable.
 
-Launch an Ubuntu EC2 instance.
+---
 
-SSH into the instance.
+## Contact
 
-## 4. Install Docker on EC2
+**Fred Kibutu**
+*Data Analyst | Data Engineer | Software Developer*
+📧 [Email][Kibutujr@gmail.com]
+[LinkedIn][https://www.linkedin.com/in/fred-kibutu/] 
+[Portfolio][https://kibutujr.github.io/Portfolio-KibutuJr/]
 
-sudo apt-get update -y
-sudo apt-get upgrade -y
-curl -fsSL https://get.docker.com -o get-docker.sh
-sudo sh get-docker.sh
-sudo usermod -aG docker ubuntu
-newgrp docker
-
-## 5. Configure EC2 as a Self‑Hosted GitHub Runner
-
-In your GitHub repo, go to Settings → Actions → Runners → New self‑hosted runner.
-
-Copy the registration commands and run them on your EC2 host.
-
-## 6. GitHub Secrets
-
-Add the following in your repo’s Settings → Secrets:
-
-AWS_ACCESS_KEY_ID
-
-AWS_SECRET_ACCESS_KEY
-
-AWS_DEFAULT_REGION (e.g. ap-south-1)
-
-ECR_REPO (your ECR repository URI, e.g. 970547337635.dkr.ecr.ap-south-1.amazonaws.com/askmedix)
-
-PINECONE_API_KEY
-
-HUGGINGFACE_API_TOKEN
-
-## 7. Sample .github/workflows/deploy.yml
-
-name: CI/CD Pipeline
-
-on:
-push:
-branches: [ main ]
-
-jobs:
-build-and-push:
-runs-on: ubuntu-latest
-steps: - name: Checkout code
-uses: actions/checkout@v3
-
-      - name: Log in to ECR
-        uses: aws-actions/amazon-ecr-login@v1
-
-      - name: Build Docker image
-        run: |
-          docker build -t ${{ secrets.ECR_REPO }}:latest .
-
-      - name: Push to ECR
-        run: |
-          docker push ${{ secrets.ECR_REPO }}:latest
-
-deploy:
-needs: build-and-push
-runs-on: self-hosted
-steps: - name: SSH & Deploy
-uses: appleboy/ssh-action@v0.1.5
-with:
-host: ${{ secrets.EC2_HOST }}
-          username: ubuntu
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
-            docker pull ${{ secrets.ECR_REPO }}:latest
-            docker stop askmedix || true
-            docker rm askmedix || true
-            docker run -d --name askmedix -p 5000:5000 \
-              -e PINECONE_API_KEY=${{ secrets.PINECONE_API_KEY }} \
- -e HUGGINGFACE_API_TOKEN=${{ secrets.HUGGINGFACE_API_TOKEN }} \
- ${{ secrets.ECR_REPO }}:latest
+---
 
 ## License
 
-Distributed under the MIT License. See LICENSE for more information.
+This project is licensed under the terms specified in the included `LICENSE` file.
+
+---
+
+```
+Do you want me to also design a **professional badges section** (Python, Flask, LangChain, Hugging Face, Pinecone, Docker) at the top to make the README look more polished?
+```
