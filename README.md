@@ -154,7 +154,7 @@ We welcome contributions to make AskMediX more impactful. Whether it's improving
 
 - 📧 Email: [Kibutujr@gmail.com](mailto:Kibutujr@gmail.com)  
 - 🔗 LinkedIn: [linkedin.com/in/fred-kibutu](https://www.linkedin.com/in/fred-kibutu/)  
-- 🌐 Portfolio: [kibutujr.github.io/Portfolio-KibutuJr](https://kibutujr.github.io/Portfolio-KibutuJr/)  
+- 🌐 Portfolio: [KibutuJR](https://kibutujr.vercel.app/)  
 
 ---
 
